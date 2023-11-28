@@ -50,14 +50,14 @@
 mkdir try-citus
 cd try-citus
 ```
-![mkdir-try-citus](ss/1. mkdir try-citus.PNG)
+![mkdir-try-citus](ss/1.mkdir-try-citus.PNG)
 
 #### b) Menggunakan editor teks untuk menciptakan dokumen baru bernama 'docker-compose.yml'.
 ```
 vi docker-compose.yml
 ```
-![vi-docker-compose](ss/2. vi docker_compose yml.PNG)
-![vi-dockercompose-2](ss/3. vi docker_compose yml.PNG)
+![vi-docker-compose](ss/2.vi-docker-compose-yml.PNG)
+![vi-dockercompose-2](ss/3.vi-docker-compose-yml.PNG)
 
 #### c) Paste isi file yang telah disalin dari repositori Citus di GitHub ke dalam dokumen baru 'docker-compose.yml' yang baru dibuat, lalu melakukan penyesuaian pada beberapa variabel.
 
@@ -75,37 +75,37 @@ master environment:
 manager:
 - container_name: "citus_manager"
 
-![edit-file](ss/4. edit file.PNG)
+![edit-file](ss/4.edit-file.PNG)
 
 #### d) Setelah melakukan modifikasi, menyimpan dokumen dan menjalankan perintah docker-compose dalam mode latar belakang dengan menggunakan nama proyek 'citus'.
 ```
 docker-compose -p citus up -d
 ```
-![jalankan-docker-compose](ss/5. running docker compose.PNG)
+![jalankan-docker-compose](ss/5.running-docker-compose.PNG)
 
 #### e) Memeriksa apakah wadah yang dibuat berjalan dengan baik.
 ```
 docker ps
 ```
-![container-running](ss/6. cek container yg running.PNG)
+![container-running](ss/6.cek-container-yg-running.PNG)
 
 #### f) Mengakses terminal bash di dalam container citus_master.
 ```
 docker exec -it citus_master bash
 ```
-![terminal-citus-master](ss/7. membuka terminal bash citus.PNG)
+![terminal-citus-master](ss/7.membuka-terminal-bash-citus.PNG)
 
 #### g) Terhubung ke sistem PostgreSQL menggunakan nama akun 'mysuperuser' dan basis data 'postgres'.
 ```
 psql -U mysuperuser -d postgres
 ```
-![connect-psql](ss/8. connect ke postgres.PNG)
+![connect-psql](ss/8.connect-ke-postgres.PNG)
 
 #### h) Buat ekstensi citus
 ```
 create extension citus;
 ```
-![create-extension](ss/9. create extension citus.PNG)
+![create-extension](ss/9.create-extension-citus.PNG)
 
 #### i) Membuat tabel 'events_columnar' dengan menggunakan metode penyimpanan columnar
 ```
@@ -117,36 +117,36 @@ create table events_columnar (
 )
 using columnar;
 ```
-![create-columnar-table](ss/10. create table.PNG)
+![create-columnar-table](ss/10.create-table.PNG)
 
 #### j) Menambahkan data ke dalam tabel yang baru dibuat.
 ```
 insert into events_columnar (device_id, data)
 select d, '{"hello":"columnar"}' from generate_series(1,100) d;
 ```
-![insert-data](ss/11. insert data.PNG)
+![insert-data](ss/11.insert-data.PNG)
 
 #### k) Membuat tabel 'events_row' sebagai alternatif dari tabel yang telah ada untuk keperluan perbandingan.
 ```
 create table events_row as select * from events_columnar;
 ```
-![create-row-table](ss/12. create table row.PNG)
+![create-row-table](ss/12.create-table-row.PNG)
 
 #### l) Menampilkan sepuluh baris data dari masing-masing tabel.
 ```
 select * from events_columnar limit 10;
 ```
-![show-table-1](ss/13. show table columnar.PNG)
+![show-table-1](ss/13.show-table-columnar.PNG)
 ```
 select * from events_row limit 10;
 ```
-![show-table-2](ss/14. show table row.PNG)
+![show-table-2](ss/14.show-table-row.PNG)
 
 #### m) Menampilkan informasi terperinci mengenai struktur tabel.
 ```
 \dt+
 ```
-![perbandingan-table](ss/14. info table & membandingkan table.PNG)
+![perbandingan-table](ss/14.info-membandingkan-table.PNG)
 
 ### 5. Perbedaan access method heap dan columnar:
 	Access Method "Heap":
